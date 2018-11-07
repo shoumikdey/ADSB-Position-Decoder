@@ -17,8 +17,6 @@ def NL(lat):
     except:
         return 1
 
-global_lat_even = 0
-global_lat_odd = 0
 def latitude(lat_even, lat_odd, t_even, t_odd):
     dlatEven = 6;
     dlatOdd = 360/59;
@@ -31,8 +29,6 @@ def latitude(lat_even, lat_odd, t_even, t_odd):
         latEven -= 360
     if latOdd >= 270:
         latOdd -= 360
-    global_lat_even=latEven
-    global_lat_odd=latOdd
     if(NL(latEven) != NL(latOdd)):
         exit("The positions are in different latitude zones")
     if(t_even >= t_odd):
