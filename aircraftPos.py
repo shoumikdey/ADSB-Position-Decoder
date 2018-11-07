@@ -62,6 +62,15 @@ def longitude(lat_even1, lat_odd1, long_even, long_odd, t_even, t_odd, nl_lat):
 #print(latitude("10110011110111111", "10101100101000001", 0, 1))
 #print(longitude("10110011110111111", "10101100101000001", "01001101110100110", "11110101101111010", 0, 1))
 
+def altitude(bin_altitude):
+    qBit = bin_altitude[7]
+    alt=bin_altitude[0:7]+bin_altitude[8:]
+    altitude = int(alt, 2)
+    if(int(qBit) == 1):
+        return altitude * 25 - 1000
+    else:
+        return altitude * 100 - 1000
+
 frame1 = input("Enter frame 1: ")
 frame2 = input("Enter frame 2: ")
 hex_pos1 = frame1[8:22]
@@ -86,6 +95,7 @@ elif(int(cpr_frame1) == 1 and int(cpr_frame2) == 0):
     bin_lat_odd = bin_lat1
     bin_long_odd = bin_long1
 
+bin_alt = bin_frame2[8:20]
 
 if(bin_lat_even == bin_lat2):
     print("latitude:", latitude(bin_lat_even, bin_lat_odd, 0, 1))
@@ -93,3 +103,5 @@ if(bin_lat_even == bin_lat2):
 else:
     print("latitude:", latitude(bin_lat_even, bin_lat_odd, 1, 0))
     print("longitude:", longitude(bin_lat_even, bin_lat_odd, bin_long_even, bin_long_odd, 1, 0, latitude(bin_lat_even, bin_lat_odd, 1, 0)))
+
+print("Altitude:",altitude(bin_alt),"ft OR", (altitude(bin_alt)*0.3048),"m")
