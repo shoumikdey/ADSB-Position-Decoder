@@ -17,7 +17,8 @@ def NL(lat):
     except:
         return 1
 
-
+global_lat_even = 0
+global_lat_odd = 0
 def latitude(lat_even, lat_odd, t_even, t_odd):
     dlatEven = 6;
     dlatOdd = 360/59;
@@ -30,6 +31,8 @@ def latitude(lat_even, lat_odd, t_even, t_odd):
         latEven -= 360
     if latOdd >= 270:
         latOdd -= 360
+    global_lat_even=latEven
+    global_lat_odd=latOdd
     if(NL(latEven) != NL(latOdd)):
         exit("The positions are in different latitude zones")
     if(t_even >= t_odd):
@@ -39,22 +42,22 @@ def latitude(lat_even, lat_odd, t_even, t_odd):
 
 
 
-def longitude(lat_even1, lat_odd1, long_even, long_odd, t_even, t_odd):
+def longitude(lat_even1, lat_odd1, long_even, long_odd, t_even, t_odd, nl_lat):
     #if(NL(int(lat_even1, 2)) != NL(int(lat_odd1, 2))):
     #print(NL(10.2157745361328), NL(10.2162144547802))
     if(t_even > t_odd):
-        ni = max(NL(int(lat_even1, 2)),1)
+        ni = max(NL(nl_lat),1)
         dLon = 360 / ni
         cprEven1 = int(long_even, 2)/131072
         cprOdd1 = int(long_odd, 2)/131072
-        m = math.floor(cprEven1 * (NL(int(lat_even1, 2)) - 1) - cprOdd1 * NL(int(lat_even1, 2)) + 0.5)
+        m = math.floor(cprEven1 * (NL(nl_lat) - 1) - cprOdd1 * NL(nl_lat) + 0.5)
         lon =  dLon*(m % ni + cprEven1)
     elif(t_odd > t_even):
-        ni = max(NL(int(lat_odd1, 2))-1,1)
+        ni = max(NL(nl_lat)-1,1)
         dLon = 360 / ni
         cprEven1 = int(long_even, 2)/131072
         cprOdd1 = int(long_odd, 2)/131072
-        m = math.floor(cprEven1 * (NL(int(lat_odd1, 2)) - 1) - cprOdd1 * NL(int(lat_odd1, 2)) + 0.5)
+        m = math.floor(cprEven1 * (NL(nl_lat) - 1) - cprOdd1 * NL(nl_lat) + 0.5)
         lon = dLon*(m%ni + cprOdd1)
     if(lon >= 180):
         return lon - 360
@@ -90,7 +93,7 @@ elif(int(cpr_frame1) == 1 and int(cpr_frame2) == 0):
 
 if(bin_lat_even == bin_lat2):
     print("latitude:", latitude(bin_lat_even, bin_lat_odd, 0, 1))
-    print("longitude:", longitude(bin_lat_even, bin_lat_odd, bin_long_even, bin_long_odd, 0, 1))
+    print("longitude:", longitude(bin_lat_even, bin_lat_odd, bin_long_even, bin_long_odd, 0, 1, latitude(bin_lat_even, bin_lat_odd, 0, 1)))
 else:
     print("latitude:", latitude(bin_lat_even, bin_lat_odd, 1, 0))
-    print("longitude:", longitude(bin_lat_even, bin_lat_odd, bin_long_even, bin_long_odd, 1, 0))
+    print("longitude:", longitude(bin_lat_even, bin_lat_odd, bin_long_even, bin_long_odd, 1, 0, latitude(bin_lat_even, bin_lat_odd, 1, 0)))
