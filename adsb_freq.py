@@ -7,7 +7,7 @@ def df(frame):
     df = int(bin_frame[0:5], 2)
     return df
 
-fhandle = open('adsb_20181108.txt')
+fhandle = open('adsb_20181108_0.txt')
 fr = dict()
 for line in fhandle:
     fr[line[1:len(line)-2]] = fr.get(line[1:len(line)-2], 0) + 1
