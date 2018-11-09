@@ -84,6 +84,7 @@ bin_lat1 = bin_frame1[22:39]
 bin_lat2 = bin_frame2[22:39]
 bin_long1 = bin_frame1[39:]
 bin_long2 = bin_frame2[39:]
+
 if(int(cpr_frame1) == 0 and int(cpr_frame2) == 1):
     bin_lat_even = bin_lat1
     bin_long_even = bin_long1
